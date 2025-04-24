@@ -21,6 +21,9 @@ RUN  make small-binary
 RUN chmod +x bin/hsr
 
 FROM debian:bookworm-slim AS runner
+# Install CA certificates
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && \
+  rm -rf /var/lib/apt/lists/*
 # Create appuser and group
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 COPY --from=builder --chown=appuser:appgroup /go/src/app/bin/hsr /hsr
