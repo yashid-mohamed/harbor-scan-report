@@ -1,7 +1,7 @@
 FROM golang:1.24 AS builder
 WORKDIR /go/src/app
 # Install upx
-RUN apt-get update && apt-get install -y upx && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y upx-ucl && rm -rf /var/lib/apt/lists/*
 
 COPY cmd cmd
 COPY Makefile Makefile
