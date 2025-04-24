@@ -21,7 +21,7 @@ type ScanResultsJson struct {
 			Links           []string `json:"links,omitempty"`
 			ArtifactDigests []string `json:"artifact_digests,omitempty"`
 			PreferredCvss   struct {
-				ScoreV3  string      `json:"score_v3,omitempty"`
+				ScoreV3  float64     `json:"score_v3,omitempty"`
 				ScoreV2  interface{} `json:"score_v2,omitempty"`
 				VectorV3 string      `json:"vector_v3,omitempty"`
 				VectorV2 string      `json:"vector_v2,omitempty"`
