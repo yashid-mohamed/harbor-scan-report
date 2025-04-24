@@ -66,7 +66,7 @@ runs:
   # uncomment for dev purposes
   # image: 'Dockerfile'
   # image: 'docker://kio.ee/kyberorg/hsr:v0.5.2'
-  image: 'ghcr.io/yashid-mohamed/hsr:dev'
+  image: 'docker://ghcr.io/yashid-mohamed/hsr:dev'
   args:
     - ${{ inputs.harbor-host }}
     - ${{ inputs.harbor-robot }}
