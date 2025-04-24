@@ -65,7 +65,8 @@ runs:
   using: 'docker'
   # uncomment for dev purposes
   # image: 'Dockerfile'
-  image: 'docker://kio.ee/kyberorg/hsr:v0.5.2'
+  # image: 'docker://kio.ee/kyberorg/hsr:v0.5.2'
+  image: 'ghcr.io/${{ github.repository_owner }}/hsr:dev'
   args:
     - ${{ inputs.harbor-host }}
     - ${{ inputs.harbor-robot }}
