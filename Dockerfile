@@ -21,6 +21,8 @@ RUN  make small-binary
 RUN chmod +x bin/hsr
 
 FROM debian:bookworm-slim AS runner
+# Create appuser and group
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 COPY --from=builder --chown=appuser:appgroup /go/src/app/bin/hsr /hsr
 COPY  --chown=appuser:appgroup entrypoint.sh /entrypoint.sh
 RUN chmod u+x /entrypoint.sh
