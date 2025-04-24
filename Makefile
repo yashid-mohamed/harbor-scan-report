@@ -32,7 +32,7 @@ build-small:
 small-binary: build-small upx
 
 upx: ## Compress with upx
-	upx-ucl --brute bin/${BINARY}
+	upx --brute bin/${BINARY}
 
 clean: ## Clean build directory.
 	rm -f ./bin/${BINARY}
