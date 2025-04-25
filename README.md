@@ -7,46 +7,67 @@ This action retrieves the scan report and optionally posts a comment with the sc
 Currently, it can comment on Pull Requests (PRs) and issues.
 
 This action consists of two parts:
+
 1. Retrieving the scan report.
 2. Generating a GitHub comment (optional).
 
 ## Why is it useful?
 
 * Your image is stored in [Harbor](https://goharbor.io/).
-* You want to prevent insecure images from being deployed.
+* Make developers aware of vulnerabilities in their images by posting comments on PRs or issues.
+* You want to ensure that the image is scanned before PR approval/merge.
+* You want to prevent insecure images from being deployed. (although this can be enforced strictly by using Harbor's deployment security setting)
 
 ## Examples
 
 ### Clean Image
+
 ![CleanImage](clean-image.png?raw=true)
 
 ### Vulnerable Image
+
 ![VulnerableImage](vulnerable-image.png)
 
 ## Configuration
 
-### Minimal Valid Example
+### Minimal Valid Example (without PR comment)
+
+This example shows how to use the action without posting a comment.
 
 ```yaml
 - name: Run Report
-  uses: kyberorg/harbor-scan-report@v0.1
+  uses: yashid-mohamed/harbor-scan-report@v0.1
   with:
-    harbor-host: my_harbor.tld
-    image: my_harbor.tld/hub/redhat/ubi8:latest
+    harbor-host: harbor.mydomain
+    image: harbor.mydomain/myproject/myrepo/myimage:latest
+```
+
+This example shows how to use the action to post PR comments.
+
+```yaml
+- name: Run Report
+  uses: yashid-mohamed/harbor-scan-report@v0.1
+  with:
+    harbor-host: harbor.mydomain
+    harbor-robot: ${{ secrets.HARBOR_ROBOT_USERNAME }}
+    harbor-token: ${{ secrets.HARBOR_ROBOT_PASSWORD }}
+    image: harbor.mydomain/myproject/myrepo/myimage:latest
+    github-url: ${{ github.event.pull_request.comments_url }}
+    github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### Full Example
 
 ```yaml
 - name: Run Report
-  uses: kyberorg/harbor-scan-report@v0.1
+  uses: yashid-mohamed/harbor-scan-report@v0.1
   with:
-    harbor-host: my_harbor.tld
+    harbor-host: harbor.mydomain
     harbor-proto: http
     harbor-port: 8080
     harbor-robot: ${{ secrets.HARBOR_ROBOT }}
     harbor-token: ${{ secrets.HARBOR_TOKEN }}
-    image: my_harbor.tld:8080/hub/redhat/ubi8:latest
+    image: harbor.mydomain:8080/myproject/myrepo/myimage:latest
     digest: sha256:01814f4b10f321f09244a919d34b0d5706d95624b4c69d75866bb9935a89582d
     timeout: 150
     check-interval: 10
@@ -137,8 +158,9 @@ Required: `no`
 ### `github-url`
 
 The GitHub API endpoint to use. Typically, you would use built-in variables:
-- `github.event.issue.comments_url` for commenting on issues.
-- `github.event.pull_request.comments_url` for commenting pull requests.
+
+* `github.event.issue.comments_url` for commenting on issues.
+* `github.event.pull_request.comments_url` for commenting pull requests.
 
 If not defined, commenting mode is disabled.
 
@@ -155,7 +177,8 @@ A GitHub personal access token used to comment on your behalf. Normally, this is
 ```yaml
 github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
-Note: This token must have the following permissions to comment on the issue or pull request.
+
+Note: You must assign the following permissions to allow comments on the issues and pull requests to use this action with the GITHUB_TOKEN.
 
 ```yaml
 permissions:
@@ -199,7 +222,7 @@ The protocol of the Harbor instance. Use this if your Harbor instance is accessi
 
 Valid values: `http` and `https`.
 
-Default value is `https`. 
+Default value is `https`.
 
 ### `harbor-port`
 
