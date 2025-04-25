@@ -1,9 +1,10 @@
 package scan
 
 import (
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/severity"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/util"
 	"time"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/severity"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
 )
 
 type Report struct {

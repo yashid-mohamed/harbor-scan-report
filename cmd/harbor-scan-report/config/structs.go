@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/comment"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/severity"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/comment"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/severity"
 )
 
 type appConfig struct {

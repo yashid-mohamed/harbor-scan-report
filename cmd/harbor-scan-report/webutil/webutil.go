@@ -3,9 +3,10 @@ package webutil
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/config"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/harbor"
 	"net/http"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/config"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/harbor"
 )
 
 const (

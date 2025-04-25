@@ -2,13 +2,14 @@ package main
 
 import (
 	"errors"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/config"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/github"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/image"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/log"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/report"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/scan"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/util"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/config"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/github"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/image"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/log"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/report"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/scan"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
 )
 
 func main() {

@@ -3,13 +3,14 @@ package config
 import (
 	"errors"
 	"fmt"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/comment"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/log"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/severity"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/util"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/comment"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/log"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/severity"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
 )
 
 const (

@@ -26,7 +26,7 @@ This action consists of two parts:
 
 ### Vulnerable Image
 
-![VulnerableImage](vulnerable-image.png)
+![VulnerableImage](vulnerable-image.png?raw=true)
 
 ## Configuration
 

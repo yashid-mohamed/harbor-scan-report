@@ -2,8 +2,9 @@ package report
 
 import (
 	"fmt"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/config"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/scan"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/config"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/scan"
 )
 
 const (

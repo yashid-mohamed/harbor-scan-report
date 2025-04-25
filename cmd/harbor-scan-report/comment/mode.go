@@ -3,8 +3,9 @@ package comment
 import (
 	"errors"
 	"fmt"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/util"
 	"strings"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
 )
 
 type Mode string

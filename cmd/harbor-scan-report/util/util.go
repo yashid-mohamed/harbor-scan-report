@@ -2,10 +2,11 @@ package util
 
 import (
 	"encoding/json"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/log"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/log"
 )
 
 func IsStringEmpty(s string) bool {

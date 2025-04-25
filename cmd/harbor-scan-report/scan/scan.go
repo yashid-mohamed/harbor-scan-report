@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/config"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/harbor"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/log"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/severity"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/util"
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/webutil"
 	"io"
 	"sort"
 	"time"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/config"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/harbor"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/log"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/severity"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/webutil"
 )
 
 const scanReadyMarker = "Success"

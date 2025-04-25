@@ -1,6 +1,6 @@
 package operation
 
-import "github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/util"
+import "github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
 
 type Result struct {
 	successFlag bool

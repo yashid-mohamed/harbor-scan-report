@@ -1,8 +1,9 @@
 package severity
 
 import (
-	"github.com/kyberorg/harbor-scan-report/cmd/harbor-scan-report/util"
 	"strings"
+
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
 )
 
 type Severity int8

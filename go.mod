@@ -1,3 +1,3 @@
-module github.com/kyberorg/harbor-scan-report
+module github.com/yashid-mohamed/harbor-scan-report
 
-go 1.19
+go 1.24
