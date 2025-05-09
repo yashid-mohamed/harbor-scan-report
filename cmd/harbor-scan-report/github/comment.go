@@ -78,8 +78,7 @@ func createMessage() string {
 	}
 	b.WriteString(fmt.Sprintf("\n"))
 	if report.Counters.Total > 0 {
-		b.WriteString(fmt.Sprintf(
-			"[%s](\"critical\") **%d** critical "+
+		b.WriteString(fmt.Sprintf("[%s] **%d** critical "+
 				"[%s] **%d** high "+
 				"[%s] **%d** medium "+
 				"[%s] **%d** low\n",
