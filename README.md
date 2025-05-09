@@ -190,7 +190,7 @@ permissions:
 
 String that is used as comment title.
 
-Default: `Docker Image Vulnerability Report`
+Default: `Harbor Image Scan Report`
 
 ### `comment-mode`
 
