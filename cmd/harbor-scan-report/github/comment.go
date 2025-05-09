@@ -71,18 +71,18 @@ func createMessage() string {
 	b.WriteString(fmt.Sprintf("Results for image [%s](%s) \n", config.Get().ImageInfo.Raw, harbor.UiUrl()))
 	b.WriteString(fmt.Sprintf("\n"))
 	b.WriteString(topSeverityEmoji() + " ")
-	b.WriteString(fmt.Sprintf("Total %d vulnerabilities found ",
+	b.WriteString(fmt.Sprintf("Total **%d** vulnerabilities found ",
 		report.Counters.Total))
 	if report.Counters.Total > 0 {
-		b.WriteString(fmt.Sprintf("- %d fixable ", report.Counters.Fixable))
+		b.WriteString(fmt.Sprintf("- **%d** fixable ", report.Counters.Fixable))
 	}
 	b.WriteString(fmt.Sprintf("\n"))
 	if report.Counters.Total > 0 {
 		b.WriteString(fmt.Sprintf(
-			"[%s](\"critical\") %d critical "+
-				"[%s](\"high\") %d high "+
-				"[%s](\"medium\") %d medium "+
-				"[%s](\"low\") %d low\n",
+			"[%s](\"critical\") **%d** critical "+
+				"[%s] **%d** high "+
+				"[%s] **%d** medium "+
+				"[%s] **%d** low\n",
 			s2e(severity.Critical), report.Counters.Critical,
 			s2e(severity.High), report.Counters.High,
 			s2e(severity.Medium), report.Counters.Medium,
