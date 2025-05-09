@@ -40,7 +40,7 @@ inputs:
   comment-title:
     description: 'Custom comment title'
     required: false
-    default: 'Docker Image Vulnerability Report'
+    default: 'Harbor Image Scan Report'
   comment-mode:
     description: 'Create new comment or update exising. Possible values are: create_new, update_last'
     required: false
