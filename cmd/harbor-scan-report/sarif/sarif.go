@@ -33,11 +33,11 @@ type Tool struct {
 
 // ToolComponent contains information about the analysis tool component
 type ToolComponent struct {
-	Name           string                  `json:"name"`
-	Version        string                  `json:"version,omitempty"`
-	InformationURI string                  `json:"informationUri,omitempty"`
-	Rules          []ReportingDescriptor   `json:"rules,omitempty"`
-	Properties     map[string]interface{}  `json:"properties,omitempty"`
+	Name           string                 `json:"name"`
+	Version        string                 `json:"version,omitempty"`
+	InformationURI string                 `json:"informationUri,omitempty"`
+	Rules          []ReportingDescriptor  `json:"rules,omitempty"`
+	Properties     map[string]interface{} `json:"properties,omitempty"`
 }
 
 // ReportingDescriptor represents a rule that was evaluated during the scan
@@ -192,7 +192,7 @@ func createSarifReport(report *scan.Report) SarifReport {
 			{
 				Tool: Tool{
 					Driver: ToolComponent{
-						Name:           "Trivy via Harbor",
+						Name:           "Trivy",
 						Version:        report.Scanner.Version,
 						InformationURI: "https://github.com/aquasecurity/trivy",
 						Rules:          rules,
