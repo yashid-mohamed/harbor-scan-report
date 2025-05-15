@@ -31,6 +31,9 @@ inputs:
     description: 'If set to true, Vulnerability Report will contain only items that have fix version'
     required: false
     default: 'false'
+  sarif-output-path:
+    description: 'Path where to write SARIF output. If provided, the action will generate a SARIF report.'
+    required: false
   github-url:
     description: "github.event.issue.comments_url - for issue, github.event.pull_request.comments_url - for PR"
     required: false
@@ -65,7 +68,8 @@ runs:
   using: 'docker'
   # uncomment for dev purposes
   # image: 'Dockerfile'
-  image: 'docker://ghcr.io/yashid-mohamed/hsr:trunk'
+  # image: 'docker://ghcr.io/yashid-mohamed/hsr:trunk'
+  image: 'docker://ghcr.io/yashid-mohamed/hsr:dev'
   args:
     - ${{ inputs.harbor-host }}
     - ${{ inputs.harbor-robot }}
@@ -83,3 +87,4 @@ runs:
     - ${{ inputs.digest }}
     - ${{ inputs.report-sort-by }}
     - ${{ inputs.report-only-fixable }}
+    - ${{ inputs.sarif-output-path }}

@@ -17,9 +17,10 @@ type Report struct {
 }
 
 type Scanner struct {
-	Name    string
-	Vendor  string
-	Version string
+	Name     string
+	Vendor   string
+	Version  string
+	Duration int
 }
 
 type Vulnerability struct {

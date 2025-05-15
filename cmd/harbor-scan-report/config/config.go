@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -83,6 +84,7 @@ func init() {
 		Report: Report{
 			SortBy:          getSortCriteria(),
 			ShowFixableOnly: getShowFixableOnly(),
+			SarifOutputPath: getSarifOutputPath(),
 		},
 	}
 	updateCredentialsState()
@@ -318,6 +320,34 @@ func getShowFixableOnly() bool {
 		util.ExitOnError(err)
 	}
 	return fixableOnly
+}
+
+func getSarifOutputPath() string {
+	path := strings.TrimSpace(os.Getenv("SARIF_OUTPUT_PATH"))
+	if path == "" {
+		return ""
+	}
+
+	// If it's already an absolute path, use it as is
+	if filepath.IsAbs(path) {
+		return path
+	}
+
+	// Try to use GITHUB_WORKSPACE if available
+	githubWorkspace := os.Getenv("GITHUB_WORKSPACE")
+	if githubWorkspace != "" {
+		log.Debug.Printf("Using GITHUB_WORKSPACE: %s", githubWorkspace)
+		return filepath.Join(githubWorkspace, path)
+	}
+
+	// If GITHUB_WORKSPACE isn't set, make it absolute relative to the current directory
+	absPath, err := filepath.Abs(path)
+	if err != nil {
+		log.Warning.Printf("Failed to get absolute path for %s: %s", path, err.Error())
+		return path // Return original path if we can't make it absolute
+	}
+	
+	return absPath
 }
 
 func parseImage() string {
