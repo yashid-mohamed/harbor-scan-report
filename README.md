@@ -241,6 +241,8 @@ Default: Empty (no SARIF output)
 
 Required: `no`
 
+> **Note:** If a relative path is provided, the file will be created relative to the GitHub workspace (`${{ github.workspace }}`) automatically.
+
 ```yaml
 sarif-output-path: "vulnerability-report.sarif"
 ```
@@ -279,7 +281,7 @@ jobs:
           harbor-token: ${{ secrets.HARBOR_TOKEN }}
           image: harbor.example.com/project/my-image:latest
           max-allowed-severity: high
-          sarif-output-path: harbor-results.sarif
+          sarif-output-path: harbor-results.sarif  # Will be created in ${{ github.workspace }}
 
       - name: Upload SARIF to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2

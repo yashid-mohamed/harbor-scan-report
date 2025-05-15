@@ -51,9 +51,12 @@ func main() {
 
 	// Generate SARIF report if output path is provided
 	if util.IsStringPresent(config.Get().Report.SarifOutputPath) {
+		log.Info.Printf("Generating SARIF report at: %s", config.Get().Report.SarifOutputPath)
 		err := sarif.GenerateSarifReport(scanReport, config.Get().Report.SarifOutputPath)
 		if err != nil {
 			log.Warning.Printf("Failed to generate SARIF report: %s\n", err.Error())
+		} else {
+			log.Info.Printf("SARIF report generated successfully")
 		}
 	}
 

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -322,7 +323,20 @@ func getShowFixableOnly() bool {
 }
 
 func getSarifOutputPath() string {
-	return strings.TrimSpace(os.Getenv("SARIF_OUTPUT_PATH"))
+	path := strings.TrimSpace(os.Getenv("SARIF_OUTPUT_PATH"))
+	if path == "" {
+		return ""
+	}
+
+	// If the path is not absolute and GITHUB_WORKSPACE is set, prepend it
+	if !filepath.IsAbs(path) {
+		githubWorkspace := os.Getenv("GITHUB_WORKSPACE")
+		if githubWorkspace != "" {
+			path = filepath.Join(githubWorkspace, path)
+		}
+	}
+
+	return path
 }
 
 func parseImage() string {

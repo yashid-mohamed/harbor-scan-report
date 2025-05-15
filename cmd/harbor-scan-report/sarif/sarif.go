@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/config"
@@ -105,10 +106,29 @@ func GenerateSarifReport(report *scan.Report, outputPath string) error {
 
 	// Write to file if output path provided, otherwise to stdout
 	if outputPath != "" {
-		err = os.WriteFile(outputPath, jsonData, 0644)
-		if err != nil {
-			return fmt.Errorf("error writing SARIF report to file: %w", err)
+		// Ensure the directory exists
+		dir := filepath.Dir(outputPath)
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return fmt.Errorf("error creating directory for SARIF report: %w", err)
 		}
+
+		// Use OpenFile instead of WriteFile for better error handling
+		file, err := os.OpenFile(outputPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+		if err != nil {
+			absPath, absErr := filepath.Abs(outputPath)
+			pathInfo := outputPath
+			if absErr == nil {
+				pathInfo = absPath
+			}
+			return fmt.Errorf("error opening SARIF report file (%s): %w", pathInfo, err)
+		}
+		defer file.Close()
+
+		// Write the JSON data to the file
+		if _, err := file.Write(jsonData); err != nil {
+			return fmt.Errorf("error writing SARIF data to file: %w", err)
+		}
+
 		log.Info.Printf("SARIF report written to %s\n", outputPath)
 	} else {
 		fmt.Println(string(jsonData))
