@@ -11,6 +11,7 @@ type ScanResultsJson struct {
 			Version string `json:"version,omitempty"`
 		} `json:"scanner,omitempty"`
 		Severity        string `json:"severity,omitempty"`
+		Duration        int    `json:"duration,omitempty"`
 		Vulnerabilities []struct {
 			ID              string   `json:"id,omitempty"`
 			Package         string   `json:"package,omitempty"`

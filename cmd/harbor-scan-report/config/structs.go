@@ -59,4 +59,5 @@ type Timing struct {
 type Report struct {
 	SortBy          SortCriteria
 	ShowFixableOnly bool
+	SarifOutputPath string
 }

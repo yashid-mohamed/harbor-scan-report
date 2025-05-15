@@ -29,5 +29,6 @@ export CHECK_INTERVAL=${13}
 # Report
 export REPORT_SORT_BY=${15}
 export REPORT_ONLY_FIXABLE=${16}
+export SARIF_OUTPUT_PATH=${17}
 # Run it!
 /hsr

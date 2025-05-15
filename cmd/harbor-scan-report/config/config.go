@@ -83,6 +83,7 @@ func init() {
 		Report: Report{
 			SortBy:          getSortCriteria(),
 			ShowFixableOnly: getShowFixableOnly(),
+			SarifOutputPath: getSarifOutputPath(),
 		},
 	}
 	updateCredentialsState()
@@ -318,6 +319,10 @@ func getShowFixableOnly() bool {
 		util.ExitOnError(err)
 	}
 	return fixableOnly
+}
+
+func getSarifOutputPath() string {
+	return strings.TrimSpace(os.Getenv("SARIF_OUTPUT_PATH"))
 }
 
 func parseImage() string {

@@ -74,6 +74,7 @@ This example shows how to use the action to post PR comments.
     max-allowed-severity: high
     report-sort-by: score
     report-only-fixable: true
+    sarif-output-path: "vulnerability-report.sarif"
     github-url: ${{ github.event.pull_request.comments_url }}
     github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -229,3 +230,65 @@ Default value is `https`.
 The custom port of the Harbor instance. Use this if the Harbor instance uses a non-default port.
 
 Any port within `0-65535` range.
+
+### `sarif-output-path`
+
+Path where to write the SARIF (Static Analysis Results Interchange Format) output file. If provided, the action will generate a SARIF report that can be used with GitHub Code Scanning or other security tools.
+
+Example: `"vulnerability-report.sarif"`
+
+Default: Empty (no SARIF output)
+
+Required: `no`
+
+```yaml
+sarif-output-path: "vulnerability-report.sarif"
+```
+
+This is particularly useful when you want to:
+
+* Upload scan results to GitHub Code Scanning
+* Integrate with other security tools that support SARIF
+* Store structured vulnerability data for further processing
+
+## SARIF Integration with GitHub Code Scanning
+
+You can use the SARIF output to upload vulnerability scan results to GitHub Code Scanning:
+
+```yaml
+name: Harbor Scan with Code Scanning
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  harbor-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Harbor Scan Report
+        uses: yashid-mohamed/harbor-scan-report@v0.1
+        with:
+          harbor-host: harbor.example.com
+          harbor-robot: ${{ secrets.HARBOR_ROBOT }}
+          harbor-token: ${{ secrets.HARBOR_TOKEN }}
+          image: harbor.example.com/project/my-image:latest
+          max-allowed-severity: high
+          sarif-output-path: harbor-results.sarif
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: harbor-results.sarif
+```
+
+This workflow:
+
+1. Checks out your repository
+2. Runs the Harbor Scan Report action to generate a SARIF report
+3. Uploads the SARIF results to GitHub Code Scanning for visualization and tracking

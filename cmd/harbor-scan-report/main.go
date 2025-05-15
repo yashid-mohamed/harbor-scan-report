@@ -8,6 +8,7 @@ import (
 	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/image"
 	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/log"
 	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/report"
+	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/sarif"
 	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/scan"
 	"github.com/yashid-mohamed/harbor-scan-report/cmd/harbor-scan-report/util"
 )
@@ -48,6 +49,27 @@ func main() {
 
 	report.WriteListOfVulnerabilities(scanReport)
 
+	// Generate SARIF report if output path is provided
+	if util.IsStringPresent(config.Get().Report.SarifOutputPath) {
+		err := sarif.GenerateSarifReport(scanReport, config.Get().Report.SarifOutputPath)
+		if err != nil {
+			log.Warning.Printf("Failed to generate SARIF report: %s\n", err.Error())
+		}
+	}
+
+	// Exit if any vulnerability of MaxAllowedSeverity or higher is found
+	var foundDisallowedSeverity bool
+	for _, vuln := range scanReport.Vulnerabilities {
+		if vuln.Severity.IsMoreCriticalThen(config.Get().MaxAllowedSeverity) || vuln.Severity == config.Get().MaxAllowedSeverity {
+			foundDisallowedSeverity = true
+			break
+		}
+	}
+	if foundDisallowedSeverity {
+		log.Error.Fatalf("Image has vulnerabilities of severity %s or higher. Check failed\n", config.Get().MaxAllowedSeverity.String())
+	}
+
+	// Existing fixable check (stricter)
 	if scanReport.TopSeverity.IsMoreCriticalThen(config.Get().MaxAllowedSeverity) {
 		var hasFixableVulnerabilities bool
 		for _, vuln := range scanReport.Vulnerabilities {
