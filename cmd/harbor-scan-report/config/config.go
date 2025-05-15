@@ -328,15 +328,26 @@ func getSarifOutputPath() string {
 		return ""
 	}
 
-	// If the path is not absolute and GITHUB_WORKSPACE is set, prepend it
-	if !filepath.IsAbs(path) {
-		githubWorkspace := os.Getenv("GITHUB_WORKSPACE")
-		if githubWorkspace != "" {
-			path = filepath.Join(githubWorkspace, path)
-		}
+	// If it's already an absolute path, use it as is
+	if filepath.IsAbs(path) {
+		return path
 	}
 
-	return path
+	// Try to use GITHUB_WORKSPACE if available
+	githubWorkspace := os.Getenv("GITHUB_WORKSPACE")
+	if githubWorkspace != "" {
+		log.Debug.Printf("Using GITHUB_WORKSPACE: %s", githubWorkspace)
+		return filepath.Join(githubWorkspace, path)
+	}
+
+	// If GITHUB_WORKSPACE isn't set, make it absolute relative to the current directory
+	absPath, err := filepath.Abs(path)
+	if err != nil {
+		log.Warning.Printf("Failed to get absolute path for %s: %s", path, err.Error())
+		return path // Return original path if we can't make it absolute
+	}
+	
+	return absPath
 }
 
 func parseImage() string {

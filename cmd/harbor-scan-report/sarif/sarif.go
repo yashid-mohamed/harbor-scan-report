@@ -129,6 +129,26 @@ func GenerateSarifReport(report *scan.Report, outputPath string) error {
 			return fmt.Errorf("error writing SARIF data to file: %w", err)
 		}
 
+		// Print file info for debugging
+		fileInfo, statErr := file.Stat()
+		if statErr == nil {
+			log.Debug.Printf("SARIF file stats - Name: %s, Size: %d bytes, ModTime: %s\n", 
+				fileInfo.Name(), fileInfo.Size(), fileInfo.ModTime())
+		}
+
+		// Print absolute path for debugging
+		absPath, absErr := filepath.Abs(outputPath)
+		if absErr == nil {
+			log.Debug.Printf("SARIF report absolute path: %s\n", absPath)
+		}
+
+		// Print first 200 characters of the SARIF report for debugging
+		previewLen := 200
+		if len(jsonData) < previewLen {
+			previewLen = len(jsonData)
+		}
+		log.Debug.Printf("SARIF report content preview: %s...\n", string(jsonData[:previewLen]))
+
 		log.Info.Printf("SARIF report written to %s\n", outputPath)
 	} else {
 		fmt.Println(string(jsonData))

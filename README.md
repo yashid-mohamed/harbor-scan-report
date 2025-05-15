@@ -241,10 +241,10 @@ Default: Empty (no SARIF output)
 
 Required: `no`
 
-> **Note:** If a relative path is provided, the file will be created relative to the GitHub workspace (`${{ github.workspace }}`) automatically.
+> **Important:** Always use a path within `${{ github.workspace }}` to ensure the SARIF file is accessible to subsequent steps in your workflow. For example, use `${{ github.workspace }}/vulnerability-report.sarif` as the full path.
 
 ```yaml
-sarif-output-path: "vulnerability-report.sarif"
+sarif-output-path: "${{ github.workspace }}/vulnerability-report.sarif"
 ```
 
 This is particularly useful when you want to:
@@ -281,16 +281,45 @@ jobs:
           harbor-token: ${{ secrets.HARBOR_TOKEN }}
           image: harbor.example.com/project/my-image:latest
           max-allowed-severity: high
-          sarif-output-path: harbor-results.sarif  # Will be created in ${{ github.workspace }}
+          sarif-output-path: ${{ github.workspace }}/harbor-results.sarif
 
       - name: Upload SARIF to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: harbor-results.sarif
+          sarif_file: ${{ github.workspace }}/harbor-results.sarif
 ```
 
-This workflow:
+This workflow will:
 
-1. Checks out your repository
-2. Runs the Harbor Scan Report action to generate a SARIF report
-3. Uploads the SARIF results to GitHub Code Scanning for visualization and tracking
+1. Checkout your repository
+2. Run the Harbor Scan Report action to generate a SARIF report in the GitHub workspace
+3. Upload the SARIF results to GitHub Code Scanning for visualization and tracking
+
+## Troubleshooting SARIF File Generation
+
+If you encounter issues with the SARIF file not being available in subsequent steps, try the following:
+
+1. Always use the full path with `${{ github.workspace }}` in the `sarif-output-path` parameter:
+
+```yaml
+sarif-output-path: "${{ github.workspace }}/vulnerability-report.sarif"
+```
+
+2. Verify the SARIF file was created by listing files in the workspace:
+
+```yaml
+- name: Check for SARIF file
+  run: |
+    ls -la ${{ github.workspace }}
+    cat ${{ github.workspace }}/vulnerability-report.sarif | head -n 20
+```
+
+3. For debugging, you can add extra logging to your workflow:
+
+```yaml
+- name: Debug environment
+  run: |
+    echo "Current directory: $(pwd)"
+    echo "GitHub workspace: ${{ github.workspace }}"
+    find ${{ github.workspace }} -name "*.sarif" -type f
+```
