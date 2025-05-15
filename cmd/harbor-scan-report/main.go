@@ -57,19 +57,6 @@ func main() {
 		}
 	}
 
-	// Exit if any vulnerability of MaxAllowedSeverity or higher is found
-	var foundDisallowedSeverity bool
-	for _, vuln := range scanReport.Vulnerabilities {
-		if vuln.Severity.IsMoreCriticalThen(config.Get().MaxAllowedSeverity) || vuln.Severity == config.Get().MaxAllowedSeverity {
-			foundDisallowedSeverity = true
-			break
-		}
-	}
-	if foundDisallowedSeverity {
-		log.Error.Fatalf("Image has vulnerabilities of severity %s or higher. Check failed\n", config.Get().MaxAllowedSeverity.String())
-	}
-
-	// Existing fixable check (stricter)
 	if scanReport.TopSeverity.IsMoreCriticalThen(config.Get().MaxAllowedSeverity) {
 		var hasFixableVulnerabilities bool
 		for _, vuln := range scanReport.Vulnerabilities {
