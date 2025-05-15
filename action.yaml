@@ -68,7 +68,8 @@ runs:
   using: 'docker'
   # uncomment for dev purposes
   # image: 'Dockerfile'
-  image: 'docker://ghcr.io/yashid-mohamed/hsr:trunk'
+  # image: 'docker://ghcr.io/yashid-mohamed/hsr:trunk'
+  image: 'docker://ghcr.io/yashid-mohamed/hsr:dev'
   args:
     - ${{ inputs.harbor-host }}
     - ${{ inputs.harbor-robot }}
